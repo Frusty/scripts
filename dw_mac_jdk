@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Author: Jan Krueger
+# Description: This will create a file jdk-1.7.0_<external_jdk_build>-mac.tar.gz with symlinks pointing to '/Library/Java/JavaVirtualMachines/jdk1.7.0_<local_jdk_build>'
+
+#Ensure we have the quantity specified on the CLI
+if [ -z "$2" ]; then ARG_ERR=ERR; fi
+if [ -z "$1" ]; then ARG_ERR=ERR; fi
+if [ -n "$ARG_ERR" ];
+then
+    echo "Usage: <external_jdk_build> <local_jdk_build>"
+    exit
+fi
+
+mkdir jdk
+mkdir jdk/bin jdk/jre jdk/lib jdk/jre/bin
+
+ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/bin/java jdk/bin/java
+ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/bin/javac jdk/bin/javac
+ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/bin/keytool jdk/bin/keytool
+ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/bin/javadoc jdk/bin/javadoc
+
+ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/jre/bin/java jdk/jre/bin/java
+
+ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/lib/tools.jar jdk/lib/tools.jar
+
+tar czvf jdk-1.7.0_$1-mac.tar.gz jdk
