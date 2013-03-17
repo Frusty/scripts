@@ -9,7 +9,7 @@ sudo killall httpd
 OUT=$?
 if [ $OUT -eq 0 ];then
    echo "Killed processes. Waiting 5 seconds."
-   sleep 5
+   sleep 10
 fi
 sudo ./webserverinstance/httpd/bin/apache_start
 sed 's/#JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/g' appserverinstance/system/bin/tomcat.sh > appserverinstance/system/bin/tomcat_debug.sh

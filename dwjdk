@@ -25,3 +25,5 @@ ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/jre/bin/ja
 ln -s /Library/Java/JavaVirtualMachines/jdk1.7.0_$2.jdk/Contents/Home/lib/tools.jar jdk/lib/tools.jar
 
 tar czvf jdk-1.7.0_$1-mac.tar.gz jdk
+
+rm -rf jdk
