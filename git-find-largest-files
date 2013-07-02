@@ -5,7 +5,7 @@
 puts "Running 'git gc'" && `git gc` unless $DEBUG
  
 # Find the 50 largest objects
-`git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n --reverse | head -50`.split("\n").each do |line|
+`git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n --reverse | head -20`.split("\n").each do |line|
 # SHA1 type size size-in-pack-file offset-in-packfile
 # or
 # SHA1 type size size-in-packfile offset-in-packfile depth base-SHA1
@@ -13,6 +13,7 @@ sha1, type, size, *rest = line.split
 size_human_readable = sprintf "%.2f", size.to_f/1024.0**2
 puts "Resolving file information for #{sha1}" if $DEBUG
 path = `git rev-list --objects --all | \grep #{sha1}`.split.last
-$stdout.puts "sha1: #{sha1}, size: #{size_human_readable} Mb, file: #{path}"
+#$stdout.puts "sha1: #{sha1}, size: #{size_human_readable} Mb, file: #{path}"
+$stdout.puts "size: #{size_human_readable} Mb, file: #{path}"
 $stdout.flush
 end
