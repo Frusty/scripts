@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Author: Jan Krueger
+# Description: This will launch the apache and a custom tc server with debug enabled. It is killing all other running apaches if found.
+
+export DW_HOME=`pwd`
+
+echo "Killing all httpd and relaunching a new instance"
+sudo killall httpd
+OUT=$?
+if [ $OUT -eq 0 ];then
+   echo "    Killed httpd processes. Waiting 10 seconds."
+   sleep 10
+fi
+
+sudo ./webserverinstance/httpd/bin/apache_start
+
+echo "    Apache webserver started"
+
+echo "Checking Datagrid status"
+./soa/bin/service status
+OUT=$?
+if [[ $OUT != 0 ]] ; then
+	echo "    Could not find running datagrid. Starting it now."
+    ./soa/bin/service restart
+else
+    echo "    Datagrid should be up. Doing nothing."
+fi
+
+echo "Disabling annoying JDK check"
+sed -i '' 's/demandware.jdk.check=true/demandware.jdk.check=false/g' appserverinstance/system/resources/cartridges/version.properties
+
+echo
+echo "All set. Good to go."
