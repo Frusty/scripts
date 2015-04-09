@@ -34,5 +34,6 @@ echo "Copying AM certificate for local fitnesse tests"
 cp $DW_HOME/server/source/bc_wapi/javasource_test/resources/core-rpc.jks $DW_HOME/appserverinstance/sharedata/certificates/core-rpc.jks
 cp $DW_HOME/server/source/test_ocapi/fitnesse/SetUp/content_sample.txt $DW_HOME/server/source/test_ocapi/fitnesse/SetUp/content.txt
 
+
 echo
 echo "All set. Good to go."

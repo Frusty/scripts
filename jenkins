@@ -1,0 +1,16 @@
+#!/bin/bash
+
+## Arg checks
+
+BUILD_PARAMETERS="-p do.ci.test.unit=true -p do.ci.test.it=true -p do.ci.test.it.fitnesse=true"
+
+if [ "$1" == "pub" ]; then
+    BUILD_PARAMETERS="$BUILD_PARAMETERS -p do.ci.publish=true"
+fi
+
+JENKINS_HOST="http://ci-dev.lab.demandware.net/"
+JENKINS_JOB="jkrueger.ecom.dev"
+
+BRANCH_NAME=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+java -jar ~/Development/Tools/jenkins-cli.jar -s $JENKINS_HOST build $JENKINS_JOB -p branch_name=$BRANCH_NAME $BUILD_PARAMETERS

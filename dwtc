@@ -5,6 +5,8 @@
 
 export DW_HOME=`pwd`
 
+sudo $DW_HOME/webserverinstance/httpd/bin/apache_stop
+
 sudo killall httpd
 OUT=$?
 if [ $OUT -eq 0 ];then
@@ -12,16 +14,16 @@ if [ $OUT -eq 0 ];then
    sleep 10
 fi
 
-sudo ./webserverinstance/httpd/bin/apache_start
+sudo $DW_HOME/webserverinstance/httpd/bin/apache_start
 
-./soa/bin/service status
+$DW_HOME/soa/bin/service status
 OUT=$?
 if [[ $OUT != 0 ]] ; then
 	echo "Could not find running datagrid. Starting it now."
-    ./soa/bin/service restart
+    $DW_HOME/soa/bin/service start
 fi
 
-sed 's/#JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/g' appserverinstance/system/bin/tomcat.sh > appserverinstance/system/bin/tomcat_debug.sh
+sed 's/#JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/g' $DW_HOME/appserverinstance/system/bin/tomcat.sh > $DW_HOME/appserverinstance/system/bin/tomcat_debug.sh
 #sed 's/#JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/JAVA_OPTS=$JAVA_OPTS\\ \"-Xdebug/g' appserverinstance/system/bin/tomcat.sh > appserverinstance/system/bin/tomcat_debug.sh
 #sed -i '' 's/JAVA_OPTS=$JAVA_OPTS\\ -javaagent:$CATALINA_HOME\/lib\/aspectjweaver-1.7.4-dev.jar/JAVA_OPTS=$JAVA_OPTS\\ -javaagent:\/Users\/jan\/Downloads\/jrebel-2\/jrebel.jar/g' appserverinstance/system/bin/tomcat_debug.sh
 
